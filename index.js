@@ -13,7 +13,7 @@ let groceryList = [
         "quantity": 100
     },
     {
-        "productid": 1,
+        "productid": 2,
         "grocery-name": "apple",
         "price": "100/kg",
         "quantity": 200
@@ -65,6 +65,22 @@ app.get('/grocery/:name', (req, res) => {
     return res.json('Item not present in the list')
 
 });
+
+app.post('/grocery/add/:name/:pass', (req, res) => {
+    const name = req.params.name;
+    const pass = req.params.pass;
+
+    const grocery = req.body;
+
+    if(name == 'admin' && pass == 'pass') {
+        console.log(grocery);
+        groceryList.push(grocery);
+
+        return res.send('Grocery Added to main List');
+    }
+
+    res.send('Wrong Credentials')
+})
 
 app.post('/addtocart/:name', (req, res) => {
     const groceryName = req.params.name;
