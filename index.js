@@ -20,7 +20,14 @@ let groceryList = [
     }
 ];
 
-let myCart = [];
+let myCart = [
+    {
+        "productid": 0,
+        "grocery-name": "dummy item",
+        "price": "00/kg",
+        "quantity": 0
+    }
+];
 
 app.use(cors());
 
@@ -59,7 +66,7 @@ app.get('/grocery/:name', (req, res) => {
 
 });
 
-app.post('/grocery/addtocart/:name', (req, res) => {
+app.post('/addtocart/:name', (req, res) => {
     const groceryName = req.params.name;
     const newGrocery = req.body;
 
@@ -71,6 +78,21 @@ app.post('/grocery/addtocart/:name', (req, res) => {
     }
 
     return res.json('Item not in the list');
+})
+
+app.delete('/cart/:id', (req, res) => {
+    const groceryid = req.params.id;
+
+    myCart = myCart.filter(i => {
+        if(i.productid != groceryid) {
+            return true;
+        }
+
+        return false;
+    })
+
+    res.send('Grocery deleted from My Cart')
+
 })
 
 app.listen(port, () => console.log(`Grocery app listening on port ${port}!`));
