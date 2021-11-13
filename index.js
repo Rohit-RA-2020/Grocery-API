@@ -82,13 +82,13 @@ app.post('/grocery/add/:name/:pass', (req, res) => {
     res.send('Wrong Credentials')
 })
 
-app.post('/addtocart/:name', (req, res) => {
-    const groceryName = req.params.name;
+app.post('/addtocart', (req, res) => {
     const newGrocery = req.body;
 
     for(let grocery of groceryList) {
-        if(grocery['grocery-name'] == groceryName) {
+        if(newGrocery['grocery-name'] == grocery["grocery-name"]) {
             myCart.push(newGrocery);
+            grocery.quantity -= newGrocery.quantity;
             return res.send(myCart);
         }
     }
